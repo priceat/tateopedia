@@ -1,6 +1,6 @@
 ## Tateopedia: a collaborative environment designed to make people as smart as me. 
 
-[Production URL](http://priceat-to-do.herokuapp.com/)
+[Production URL](https://tateopedia.herokuapp.com/)
  
  Made with my mentor at [Bloc](http://bloc.io). And a little help from Voltron.
  
