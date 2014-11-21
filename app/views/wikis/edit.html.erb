@@ -1,0 +1,30 @@
+ <h1>Editing Wiki?</h1>
+ 
+ <div class="row">
+   <div class="col-md-4">
+     <p>Guidelines for Wikis</p>
+     <ul>
+       <li>Make it weird!</li>
+       <li>Express love.</li>
+       <li>No one likes long wind. Make it short.</li>
+     </ul>
+   </div>
+   <div class="col-md-8">
+     <%= form_for @wiki do |f| %>
+       <div class="form-group">
+         <%= f.label :title %>
+         <%= f.text_field :title, class: 'form-control', placeholder: "Enter Wiki title" %>
+       </div>
+       <div class="form-group">
+         <%= f.label :body %>
+         <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter Wiki body" %>
+       </div>
+       <div class="form-group">
+         <%= f.submit "Save", class: 'btn btn-success' %>
+       </div>
+         <div class="form-group">
+          <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this Wiki?' } %>
+       </div>
+     <% end %>
+   </div>
+ </div>
