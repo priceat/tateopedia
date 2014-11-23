@@ -2,6 +2,7 @@ class WikisController < ApplicationController
   
   def index
     @wikis = Wiki.all
+    authorize @wikis
   end
 
   def show
@@ -25,10 +26,12 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def update
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     if @wiki.update_attributes(wiki_params)
       flash[:notice] = "Your Wiki is Funkier"
       redirect_to @wiki
