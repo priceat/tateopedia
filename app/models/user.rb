@@ -4,7 +4,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
      
-  before_create :standard
+  after_initialize :set_default_role, :if => :new_record?
+
+  def set_default_role
+    self.role ||= :standard
+  end
 
   def admin?
    role == 'admin'
@@ -14,10 +18,5 @@ class User < ActiveRecord::Base
    role == 'premium'
   end
 
-  private
-
-   def standard
-    role = 'standard'
-   end
 
 end
