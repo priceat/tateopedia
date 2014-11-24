@@ -1,13 +1,29 @@
-<h1>All Wikis</h1>
-  <% if policy(Wiki.new).create? %>
- <%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success' %>
- <% end %>
-<% @wikis.each do |wiki| %>
-  <div class="media">
-     <div class="media-body">
-       <h4 class="media-heading">
-         <%= link_to wiki.title, wiki %>
-       </h4>
-     </div>
-   </div>
-<% end %>
+<h1>Listing wikis</h1>
+
+<h2>My wikis</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date Created</th>
+      <th>Last Updated</th>
+      <th colspan="<%= @colspan %>"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wikis.each do |wiki| %>
+      <tr>
+        <td><%= link_to wiki.title, wiki %></td>
+        <td><%= wiki.created_at %></td>
+        <td><%= wiki.updated_at %></td>
+        <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
+        <td><%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'New Wiki', new_wiki_path %>

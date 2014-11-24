@@ -28,8 +28,14 @@ gem 'pundit'
 
 gem 'stripe'
 
+gem 'epic-editor-rails'
+
+gem 'cancan'
+
  group :development do
    gem 'sqlite3'
+   gem 'binding_of_caller'
+   gem 'better_errors'
  end
 
  group :production do

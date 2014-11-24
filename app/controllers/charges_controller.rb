@@ -8,15 +8,21 @@ class ChargesController < ApplicationController
       card: params[:stripeToken]
       )
 
-    charge = Stripe::Charge.create(
-      customer: customer.id,
-      amount: @amount,
-      description: "CashMoney Membership - #{current_user.email}",
-      currency: 'usd'
-      )
+    begin
+      charge = Stripe::Charge.create(
+        customer: customer.id,
+        amount: @amount,
+        description: "CashMoney Membership - #{current_user.email}",
+        currency: 'usd'
+        )
 
-    flash[:success] = "You're paid up, #{current_user.email}! Thanks for the lettuce doggy!"
-    redirect_to user_path(current_user)
+      if current_user.update(premium: true)
+        flash[:success] = "You're paid up, #{current_user.email}! Thanks for the lettuce doggy!"
+        redirect_to edit_user_registration_path
+      else
+        flash[:success] = "There was an error upgrading your account. Please contact support!"
+        redirect_to edit_user_registration_path
+      end
 
 
   rescue Stripe::CardError => e

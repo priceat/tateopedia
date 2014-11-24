@@ -8,22 +8,9 @@
 </head>
 <body>
   
-  <div class="container">
-       <ul class="nav nav-tabs">
-         <li><%= link_to "Tateopedia", root_path %></li>
-         <li><%= link_to "About", about_path %></li>
-
-        <div class="pull-right user-info">
-           <% if current_user %>
-             Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-             <br/>
-             <small>Account Status: <%= current_user.role %></small>
-           <% else %>
-             <%= link_to "Sign In", new_user_session_path %> or 
-             <%= link_to "Sign Up", new_user_registration_path %>
-           <% end %>
-         </div>
-
+   <header>
+      <%= render 'layouts/navigation' %>
+    </header>
    </ul>
 
        <% if flash[:notice] %>
