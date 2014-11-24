@@ -1,5 +1,14 @@
 class ChargesController < ApplicationController
 
+ def new
+    @stripe_btn_data = {
+     key: "#{ Rails.configuration.stripe[:publishable_key] }",
+     email: current_user.email,
+     description: "Tateopedia Membership - #{current_user.name}",
+     amount: 25 
+    }
+  end
+
   def create
     @amount = params[:amount]
     
@@ -31,14 +40,7 @@ class ChargesController < ApplicationController
     end
   end
 
- def new
-    @stripe_btn_data = {
-     key: "#{ Rails.configuration.stripe[:publishable_key] }",
-     email: current_user.email,
-     description: "Tateopedia Membership - #{current_user.name}",
-     amount: 2500 
-    }
-  end
+
 
 
 end
