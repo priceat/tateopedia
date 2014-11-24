@@ -26,7 +26,7 @@ gem 'figaro', '1.0'
 
 gem 'pundit'
 
-gem 'stripe'
+
 
  group :development do
    gem 'sqlite3'
