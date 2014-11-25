@@ -6,7 +6,7 @@ Tateopedia::Application.routes.draw do
   devise_for :users
     resources :users, only: [:update, :show, :index]
 
-  resources :charges, only: [:new, :create]
+  resources :charges, only: [:new, :create, :destroy]
 
 
   authenticated :user do

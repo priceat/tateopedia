@@ -19,6 +19,7 @@ class UsersController < ApplicationController
     end
   end
 
+
   def destroy
     user = User.find(params[:id])
     
@@ -29,7 +30,7 @@ class UsersController < ApplicationController
   private
 
   def secure_params
-    params.require(:user).permit(:role)
+    params.require(:user).permit(:role, :premium)
   end
 
 end

@@ -37,7 +37,10 @@
 
 
 <div class="authform">
-  <p><small>Account Status: <%= current_user.role %></small></p>
+  <p><small>Account Status: <%= current_user.role.titleize %></small></p>
+  <% if current_user.premium? %>
+ You are <div class="prem1"><%= link_to "Premium!", current_user %></div>
+  <% end %>
 <% if !current_user.premium? %>
 <h3>Upgrade Account</h3>
 <%= form_tag charges_path do %>
@@ -49,13 +52,13 @@
     class='stripe-button' 
     src="https://checkout.stripe.com/checkout.js" 
     data-key="<%= Rails.configuration.stripe[:publishable_key] %>" 
-    data-amount=25
+    data-amount=2500
     data-name="Tateopedia"
     data-description="One Year Membership"
     data-label="Upgrade Account"
     data-email="<%= current_user.email %>" >
   </script>
-<% end %>
+  <% end %>
 <% end %>
 <h3>Cancel Account</h3>
 <p>Unhappy? We'll be sad to see you go.</p>

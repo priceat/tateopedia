@@ -12,13 +12,5 @@ class User < ActiveRecord::Base
 
   scope :premium, -> { where(premium: true) }
 
-  def admin?
-   role == 'admin'
-  end
- 
-  def premium?
-   role == 'premium'
-  end
-
 
 end

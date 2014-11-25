@@ -5,7 +5,7 @@ class ChargesController < ApplicationController
      key: "#{ Rails.configuration.stripe[:publishable_key] }",
      email: current_user.email,
      description: "Tateopedia Membership - #{current_user.name}",
-     amount: 25 
+     amount: 2500 
     }
   end
 
@@ -25,7 +25,7 @@ class ChargesController < ApplicationController
         currency: 'usd'
         )
 
-      if current_user.update(premium: true)
+      if current_user.update(premium: true, stripe_customer_id: customer.id)
         flash[:success] = "You're paid up, #{current_user.email}! Thanks for the lettuce doggy!"
         redirect_to edit_user_registration_path
       else
@@ -40,7 +40,18 @@ class ChargesController < ApplicationController
     end
   end
 
+  def destroy
+    customer = Stripe::Customer.retrieve(current_user.stripe_customer_id)
 
+    if customer.delete
+      current_user.update(stripe_customer_id: 0, premium: false)
+      flash[:success] = "You're no longer premium. Welcome back to mediocrity."
+      redirect_to edit_user_registration_path
+    else
+      flash[:success] = "There was an error downgrading your account. Please contact support!"
+      redirect_to edit_user_registration_path
+    end
+  end
 
 
 end
