@@ -15,9 +15,10 @@ class WikisController < ApplicationController
 
   def create
     @wiki = Wiki.new(wiki_params)
+    
     if @wiki.save
       flash[:notice] = "Wiki, wiki... New Wiki ya'll"
-      redirect_to @wiki
+      redirect_to wikis_path
     else
       flash[:error] = "Ain't No Wiki. Try Again!"
       render :new
@@ -34,7 +35,7 @@ class WikisController < ApplicationController
     authorize @wiki
     if @wiki.update_attributes(wiki_params)
       flash[:notice] = "Your Wiki is Funkier"
-      redirect_to @wiki
+      redirect_to wikis_path
     else
       flash[:error] = "Not so fast. Nothing new"
       render :edit

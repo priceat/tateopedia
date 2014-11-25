@@ -8,6 +8,7 @@ Wiki.destroy_all
     name:     Faker::Name.name,
     email:    Faker::Internet.email,
     password: Faker::Lorem.characters(10)
+    role: standars
   )
   user.skip_confirmation!
   user.save!

@@ -25,11 +25,11 @@ class ChargesController < ApplicationController
         currency: 'usd'
         )
 
-      if current_user.update(premium: true, stripe_customer_id: customer.id)
-        flash[:success] = "You're paid up, #{current_user.email}! Thanks for the lettuce doggy!"
+      if current_user.update(role: 'premium', stripe_customer_id: customer.id)
+        flash[:notice] = "You're paid up, #{current_user.email}! Thanks for the lettuce doggy!"
         redirect_to edit_user_registration_path
       else
-        flash[:success] = "There was an error upgrading your account. Please contact support!"
+        flash[:error] = "There was an error upgrading your account. Please contact support!"
         redirect_to edit_user_registration_path
       end
 
@@ -44,11 +44,11 @@ class ChargesController < ApplicationController
     customer = Stripe::Customer.retrieve(current_user.stripe_customer_id)
 
     if customer.delete
-      current_user.update(stripe_customer_id: 0, premium: false)
-      flash[:success] = "You're no longer premium. Welcome back to mediocrity."
+      current_user.update(stripe_customer_id: 0, role: 'standard')
+      flash[:notice] = "You're no longer premium. Welcome back to mediocrity."
       redirect_to edit_user_registration_path
     else
-      flash[:success] = "There was an error downgrading your account. Please contact support!"
+      flash[:error] = "There was an error downgrading your account. Please contact support!"
       redirect_to edit_user_registration_path
     end
   end

@@ -6,11 +6,14 @@ class User < ActiveRecord::Base
      
   after_initialize :set_default_role, :if => :new_record?
 
+  validates :role, inclusion: { in: ['standard', 'premium', 'admin'].freeze }
+
   def set_default_role
     self.role ||= :standard
   end
 
-  scope :premium, -> { where(premium: true) }
-
-
+  def premium?
+    role == 'premium'
+  end
+  
 end

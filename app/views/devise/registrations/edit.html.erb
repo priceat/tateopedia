@@ -37,11 +37,11 @@
 
 
 <div class="authform">
-  <p><small>Account Status: <%= current_user.role.titleize %></small></p>
   <% if current_user.premium? %>
  You are <div class="prem1"><%= link_to "Premium!", current_user %></div>
   <% end %>
 <% if !current_user.premium? %>
+<p><small>Account Status: <%= current_user.role.titleize %></small></p>
 <h3>Upgrade Account</h3>
 <%= form_tag charges_path do %>
   <!-- The form doesn't pass the amount to the create action, so we have to pass it manually. -->

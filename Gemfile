@@ -30,7 +30,6 @@ gem 'stripe'
 
 gem 'epic-editor-rails'
 
-gem 'cancan'
 
  group :development do
    gem 'sqlite3'
