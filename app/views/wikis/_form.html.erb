@@ -1,0 +1,9 @@
+<% if current_user.upgraded? %>
+  <%= form_for @wiki do |f| %>
+    <div class="form-group">
+    <%= f.label :private, class: 'checkbox' do %>
+    <%= f.check_box :private, {}, "true", "false" %> Private wiki
+    <% end %>
+    </div>
+  <% end %>
+<% end %>

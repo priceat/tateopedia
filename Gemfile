@@ -30,6 +30,10 @@ gem 'stripe'
 
 gem 'epic-editor-rails'
 
+gem 'will_paginate', '~> 3.0.5'
+
+gem 'redcarpet'
+
 
  group :development do
    gem 'sqlite3'

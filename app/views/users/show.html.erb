@@ -1,8 +1,8 @@
-<h3>User</h3>
-<p>Name: <%= @user.name if @user.name %></p>
-<p>Email: <%= @user.email if @user.email %></p>
-<p>Account Status: <%= current_user.role %></p>
-<% if current_user.premium? %>
-<div class="prem1">You have a Premium Membership</div>
-<%= link_to "Downgrade", charge_path, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to downgrade? Quitters never win!' } %>
+<h3>Membership Status</h3>
+<p>Account Status: <%= current_user.role.titleize %></p>
+
+<% if current_user.upgraded? %>
+<div class="prem1"><strong>You have a Premium Membership!</strong></div>
+<br/>
+<%= link_to "Downgrade", charge_path, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to downgrade? Quitters never win! And we will delete all of your premium shit!' } %>
 <% end %>

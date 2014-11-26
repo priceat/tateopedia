@@ -8,7 +8,6 @@ Wiki.destroy_all
     name:     Faker::Name.name,
     email:    Faker::Internet.email,
     password: Faker::Lorem.characters(10)
-    role: standars
   )
   user.skip_confirmation!
   user.save!
@@ -16,7 +15,7 @@ end
 users = User.all
 
 # Create Wikis
-50.times do
+10.times do
    Wiki.create!(
      title:  Faker::Lorem.sentence,
      body:   Faker::Lorem.paragraph,

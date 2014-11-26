@@ -41,16 +41,24 @@ class ChargesController < ApplicationController
   end
 
   def destroy
+    
     customer = Stripe::Customer.retrieve(current_user.stripe_customer_id)
 
     if customer.delete
       current_user.update(stripe_customer_id: 0, role: 'standard')
-      flash[:notice] = "You're no longer premium. Welcome back to mediocrity."
+      current_user.destroy_private_wikis
+      flash[:notice] = "You're no longer premium. Welcome back to mediocrity. And all of your private wikis are gone..."
       redirect_to edit_user_registration_path
     else
       flash[:error] = "There was an error downgrading your account. Please contact support!"
       redirect_to edit_user_registration_path
     end
+  end
+
+  private
+
+  def purge
+    current_user.wikis.destroy_all(:premium => true)
   end
 
 

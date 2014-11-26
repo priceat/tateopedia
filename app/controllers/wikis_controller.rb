@@ -1,8 +1,22 @@
 class WikisController < ApplicationController
-  
+
   def index
-    @wikis = Wiki.all
-    authorize @wikis
+    @wikis = Wiki.public.paginate(page: params[:page], per_page: 10)
+  end
+
+  def private_index
+    @wikis = Wiki.private
+    
+    if current_user.upgraded?
+      render wikis_private_index_path
+    else 
+      flash[:error] = "You aren't a baller. But you can upgrade here!"
+      redirect_to edit_user_registration_path
+    end
+  end
+
+  def my_index
+    @wikis = current_user.wikis.all
   end
 
   def show
@@ -14,7 +28,7 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.new(wiki_params)
+    @wiki = current_user.wikis.build(wiki_params)
     
     if @wiki.save
       flash[:notice] = "Wiki, wiki... New Wiki ya'll"
@@ -25,15 +39,15 @@ class WikisController < ApplicationController
     end
   end
 
+
   def edit
     @wiki = Wiki.find(params[:id])
-    authorize @wiki
   end
 
   def update
     @wiki = Wiki.find(params[:id])
-    authorize @wiki
-    if @wiki.update_attributes(wiki_params)
+
+    if @wiki.update_attributes(params.require(:wiki).permit(:title, :body, :private))
       flash[:notice] = "Your Wiki is Funkier"
       redirect_to wikis_path
     else
@@ -56,11 +70,9 @@ class WikisController < ApplicationController
   end
 
 
-
-
 private
 
-  def wiki_params
+ def wiki_params
     params.require(:wiki).permit(:title, :body, :private)
   end
 

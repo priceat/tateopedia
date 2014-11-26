@@ -37,10 +37,10 @@
 
 
 <div class="authform">
-  <% if current_user.premium? %>
+  <% if current_user.upgraded? %>
  You are <div class="prem1"><%= link_to "Premium!", current_user %></div>
   <% end %>
-<% if !current_user.premium? %>
+<% if !current_user.upgraded? %>
 <p><small>Account Status: <%= current_user.role.titleize %></small></p>
 <h3>Upgrade Account</h3>
 <%= form_tag charges_path do %>
