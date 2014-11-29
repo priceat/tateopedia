@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   has_many :wikis
+  has_many :collaborators
+  belongs_to :collaborators
   accepts_nested_attributes_for :wikis
 
   devise :database_authenticatable, :registerable,
@@ -8,6 +10,8 @@ class User < ActiveRecord::Base
   after_initialize :set_default_role, :if => :new_record?
 
   validates :role, inclusion: { in: ['standard', 'premium', 'admin'].freeze }
+
+  scope :not, ->(id) { where('id != ?', id) }
 
 
   def set_default_role
@@ -22,4 +26,12 @@ class User < ActiveRecord::Base
     role == ('premium' || 'admin')
   end
   
+  def collaborations
+    wikis = []
+    Collaborator.where(user: self).each do |collaboration|
+      wikis << Wiki.find(collaboration.wiki_id)
+    end
+    wikis
+  end
+
 end

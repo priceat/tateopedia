@@ -4,10 +4,10 @@ class CreateWikis < ActiveRecord::Migration
       t.string :title
       t.text :body
       t.boolean :private, default: false
+      t.boolean :collaboration, default: false
       t.references :user, index: true
 
       t.timestamps
     end
   end
 end
-

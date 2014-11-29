@@ -6,7 +6,9 @@ Tateopedia::Application.routes.draw do
   get "wikis/my_index"
 
   devise_for :users 
-    resources :wikis, only: [:new, :update, :edit, :create, :show, :index, :private_index, :my_index, :destroy]
+    resources :wikis, only: [:new, :update, :edit, :create, :show, :index, :private_index, :my_index, :destroy] do
+      resources :collaborators
+    end
 
     resources :users, only: [:update, :show, :index]
 

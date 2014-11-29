@@ -1,7 +1,9 @@
 class Wiki < ActiveRecord::Base
   #attr_accessible :body, :title, :private
 
-  belongs_to :user, touch: true
+  belongs_to :user
+  has_many :collaborators
+  has_many :users, through: :collaborators
 
   after_initialize :set_default_access, :if => :new_record?
 

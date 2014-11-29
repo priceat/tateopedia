@@ -11,17 +11,21 @@
   </thead>
 
   <tbody>
-    <% @wikis.each do |wiki| %>
+ <% @wikis.each do |wiki| %>
       <tr>
         <td><%= link_to wiki.title, wiki %></td>
         <td><%= wiki.created_at %></td>
         <td><%= wiki.updated_at %></td>
+         <% if @user.upgraded? %>
+        <td><%= link_to 'View Collaborators', wiki_collaborators_path(wiki) %></td>
+        <% if wiki.user == current_user %>
+        <td><%= link_to 'Add Collaborator', new_wiki_collaborator_path(wiki) %></td>
         <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
         <td><%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+         <% end %>
+          <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-
 <%= link_to 'New Wiki', new_wiki_path %>
