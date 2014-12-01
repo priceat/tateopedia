@@ -9,7 +9,17 @@
   <%= markdown(@wiki.body) %>
   </p>
 <% if @wiki.joint? %>
-<%= render @wiki.collaborators %>
+<h4><u> Collaborators </u></h4>
+<table><thead>
+    <tr>
+      <th>User</th>
+    </tr>
+  </thead>
+   <tbody>
+      <td><%= render @wiki.collaborators %></td>
+      </tbody>
+</table>
 <% end %>
+</br>
 <%= link_to 'Edit', edit_wiki_path(@wiki) %> |
 <%= link_to 'Back', wikis_path %>
