@@ -87,3 +87,49 @@ section {
 .prem1 {
   color: blue;
 }
+
+body {
+    background-color: #eeeeee;
+}
+
+.jumbotron {
+  padding: 30px;
+  margin-bottom: 30px;
+  color: #1F1C54;
+  background-color: #ffffff;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.jumbotron h2,
+.jumbotron .h2 {
+  color: #1F1C54;
+  font-size: 40px;
+  font-weight: 500;
+}
+.jumbotron p {
+  margin-bottom: 15px;
+  font-size: 21px;
+  font-weight: 200;
+  color: #1F1C54;
+}
+.container .jumbotron {
+  border-radius: 50px;
+}
+.jumbotron .container {
+  max-width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .jumbotron {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .container .jumbotron {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .jumbotron h1,
+  .jumbotron .h1 {
+    font-size: 63px;
+  }
+}

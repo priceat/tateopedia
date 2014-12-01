@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129002635) do
+ActiveRecord::Schema.define(version: 20141129030650) do
 
   create_table "collaborators", force: true do |t|
     t.integer  "user_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20141129002635) do
     t.datetime "updated_at"
     t.string   "role",                   default: "standard"
     t.string   "stripe_customer_id"
+    t.boolean  "member",                 default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -4,9 +4,10 @@ Tateopedia::Application.routes.draw do
   get "charges/new"
   get "wikis/private_index"
   get "wikis/my_index"
+  get "wikis/collaborations_index"
 
   devise_for :users 
-    resources :wikis, only: [:new, :update, :edit, :create, :show, :index, :private_index, :my_index, :destroy] do
+    resources :wikis, only: [:new, :update, :edit, :create, :show, :index, :private_index, :my_index, :destroy, :collaborations_index] do
       resources :collaborators
     end
 

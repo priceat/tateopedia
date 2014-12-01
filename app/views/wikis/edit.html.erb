@@ -3,9 +3,12 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', @wiki %> |
-<% if current_user.upgraded? && @wiki.user == current_user %>
-<%= link_to 'Add Collaborator', new_wiki_collaborator_path(@wiki) %> |
-<% end %>
+<% if @wiki.can_be_collaboration? && @wiki.user == current_user %>
+<%= link_to 'Add Collaborator', new_wiki_collaborator_path(@wiki) %>
+<% end %> |
+  <% if @wiki.joint? %>
+    <%= render @wiki.collaborators %>
+    <% end %>
 <%= link_to 'Back', wikis_path %>
      
    

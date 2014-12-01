@@ -1,12 +1,14 @@
 class CollaboratorsController < ApplicationController
   before_action :set_collaborator, only: [:show, :edit, :update, :destroy]
-  before_action :set_wiki, only: [:new, :create, :index]
+  before_action :set_wiki, only: [:new, :create, :index, :destroy]
 
   def index
     @collaborators = @wiki.collaborators
+
   end
 
   def show
+    @collaborators = @wiki.collaborators
   end
 
   def new
@@ -16,12 +18,17 @@ class CollaboratorsController < ApplicationController
 
 
   def edit
+    @collaborators = @wiki.collaborators
   end
 
   def create
     @collaborator = @wiki.collaborators.build(collaborator_params)
 
         if @collaborator.save
+          @user = @collaborator.user(params[:user_id])
+          @wiki = @collaborator.wiki(params[:wiki_id])
+          @user.update(member: true)
+          @wiki.update(collaboration: true)
         flash[:notice] = 'Collaborator was successfully created.'
         redirect_to @wiki
       else
@@ -44,10 +51,8 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     @collaborator.destroy
-    respond_to do |format|
-      format.html { redirect_to collaborators_url, notice: 'Collaborator was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+      flash[:notice] = 'Collaborator was successfully destroyed.'
+      redirect_to @wiki
   end
 
   private

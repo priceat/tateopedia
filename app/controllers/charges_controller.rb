@@ -55,11 +55,5 @@ class ChargesController < ApplicationController
     end
   end
 
-  private
-
-  def purge
-    current_user.wikis.destroy_all(:premium => true)
-  end
-
 
 end

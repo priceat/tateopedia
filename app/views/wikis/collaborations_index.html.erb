@@ -1,0 +1,53 @@
+<h2>Shared Wikis</h2>
+
+<h3>My Created Wikis</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Created By</th>
+      <th>Date Created</th>
+      <th>Last Updated</th>
+      <th colspan=""></th>
+    </tr>
+  </thead>
+<tbody>
+    <% @wikis.each do |wiki| %>
+      <tr>
+        <td><%= link_to wiki.title, wiki %></td>
+        <td><%= wiki.user.email %></td>
+        <td><%= wiki.created_at %></td>
+        <td><%= wiki.updated_at %></td>
+        <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+  <h3> Wikis Shared with Me</h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Created By</th>
+      <th>Date Created</th>
+      <th>Last Updated</th>
+      <th colspan=""></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @collaborations.each do |wiki| %>
+      <tr>
+        <td><%= link_to wiki.title, wiki %></td>
+        <td><%= wiki.user.email %></td>
+        <td><%= wiki.created_at %></td>
+        <td><%= wiki.updated_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Wiki', new_wiki_path %>

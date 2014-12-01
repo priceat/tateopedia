@@ -1,6 +1,16 @@
-<br/>
-<div class="jumbotron">
-<h1>Welcome to Tateopedia</h1>
-<p>This is the home page for Tateopedia.</p>
- </p>
+<center><div class="jumbotron", align=center>
+  <div class="container">
+  <h2>Welcome to Tateopedia</h2>
+  <p>Help, be helped... Or don't do anything!</p>
+  <p>
+    <% if current_user %>
+    <span class="glyphicon glyphicon-ok"></span>
+    <span class="glyphicon glyphicon-ok"></span>
+    <span class="glyphicon glyphicon-ok"></span>
+    <% else %>
+      <%= link_to "Sign In", new_user_session_path, class: 'btn btn-primary' %> or 
+      <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-info' %>
+    <%end%>
+  </p>
 </div>
+</div></center>

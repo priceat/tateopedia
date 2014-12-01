@@ -1,17 +1,15 @@
-<p id="notice"><%= notice %></p>
-
+<h2> Working Wiki </h2>
 <p>
   <strong>Name:</strong>
-  <%= @wiki.title %>
+  <%= markdown(@wiki.title) %>
 </p>
 
 <p>
   <strong>Body:</strong>
   <%= markdown(@wiki.body) %>
-  
-</p>
-
-<% if @wiki.user == current_user %>
-<%= link_to 'Edit', edit_wiki_path(@wiki) %> |
+  </p>
+<% if @wiki.joint? %>
+<%= render @wiki.collaborators %>
 <% end %>
+<%= link_to 'Edit', edit_wiki_path(@wiki) %> |
 <%= link_to 'Back', wikis_path %>

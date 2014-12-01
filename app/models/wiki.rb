@@ -1,5 +1,4 @@
 class Wiki < ActiveRecord::Base
-  #attr_accessible :body, :title, :private
 
   belongs_to :user
   has_many :collaborators
@@ -11,7 +10,15 @@ class Wiki < ActiveRecord::Base
   scope :private, -> { where(:private => true) }
 
     def set_default_access
-    self.private ||= false
+      self.private ||= false
+    end
+
+    def joint?
+      self.collaboration == true
+    end
+
+    def can_be_collaboration?
+     user.upgraded? && private == true
     end
 
 

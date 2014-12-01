@@ -18,8 +18,12 @@ class WikisController < ApplicationController
 
   def my_index
     @wikis = current_user.wikis.all
-    @collaborations = current_user.collaborations
     @colspan = @user.upgraded? ? 4 : 2
+  end
+
+  def collaborations_index
+    @collaborations = current_user.collaborations
+    @wikis = current_user.wikis.where(collaboration: true)
   end
 
   def show
@@ -44,7 +48,14 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-     @users = User.all
+    @users = User.all
+
+    if user_signed_in?
+      render :edit
+    else 
+      flash[:error] = "You need to be signed up to do that!"
+      redirect_to new_user_registration_path
+    end
   end
 
   def update

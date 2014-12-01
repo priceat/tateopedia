@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   has_many :wikis
   has_many :collaborators
   belongs_to :collaborators
@@ -12,6 +13,7 @@ class User < ActiveRecord::Base
   validates :role, inclusion: { in: ['standard', 'premium', 'admin'].freeze }
 
   scope :not, ->(id) { where('id != ?', id) }
+  scope :viewable, -> { where(:member => true) }
 
 
   def set_default_role
@@ -25,13 +27,25 @@ class User < ActiveRecord::Base
   def upgraded?
     role == ('premium' || 'admin')
   end
-  
+
+  def collaboration_access?
+    upgraded? || member == true
+  end
+
+
   def collaborations
     wikis = []
-    Collaborator.where(user: self).each do |collaboration|
+      Collaborator.where(user: self).each do |collaboration|
       wikis << Wiki.find(collaboration.wiki_id)
     end
     wikis
   end
 
+  def my_collaborations
+    wikis = []
+      Wiki.where(user: self).each do |collaboration|
+      wikis << Wiki.find(collaboration.wiki_id)
+      end
+    wikis
+  end
 end

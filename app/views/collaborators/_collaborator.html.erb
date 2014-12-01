@@ -1,0 +1,15 @@
+<h4><u> Collaborators </u></h4>
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+    </tr>
+  </thead>
+   <tbody>
+<% @wiki.collaborators.each do |collaborator| %>
+<tr>
+  <td><%= collaborator.user.email %>
+  <%= link_to 'Remove', [collaborator.wiki, collaborator], method: :delete %></td>
+  <% end %>
+   </tbody>
+</table>
