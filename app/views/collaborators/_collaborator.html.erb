@@ -1,4 +1,6 @@
  <tr>
-  <b><%= collaborator.user.email %></b>__
-  <%= link_to 'Remove', [collaborator.wiki, collaborator], method: :delete %>
+  <td>
+    <b><%= collaborator.user.email %></b>
+    <%= link_to 'Remove', [collaborator.wiki, collaborator], method: :delete %>
+  </td>
 </tr>

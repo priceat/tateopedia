@@ -6,10 +6,19 @@
 <% if @wiki.can_be_collaboration? && @wiki.user == current_user %>
 <%= link_to 'Add Collaborator', new_wiki_collaborator_path(@wiki) %>
 <% end %> |
-  <% if @wiki.joint? %>
-  <h4><u> Collaborators </u></h4>
-    <%= render @wiki.collaborators %>
-    <% end %>
+<% if @wiki.joint? %>
+<h4><u> Collaborators </u></h4>
+<table><thead>
+    <tr>
+      <th>User</th>
+    </tr>
+  </thead>
+   <tbody>
+      <%= render @wiki.collaborators %>
+      </tbody>
+</table>
+<% end %>
+</br>
 <%= link_to 'Back', wikis_path %>
      
    

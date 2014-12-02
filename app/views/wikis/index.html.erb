@@ -7,7 +7,7 @@
       <th>Date Created</th>
       <th>Wiki Creator</th>
       <th>Last Updated</th>
-      <th colspan="<%= @colspan %>"></th>
+      <th>Updater</th> 
     </tr>
   </thead>
 
@@ -18,6 +18,7 @@
         <td><%= wiki.created_at %></td>
         <td><%= wiki.user.email %></td>
         <td><%= wiki.updated_at %></td>
+        <td><%= wiki.user.email %></td>
       </tr>
     <% end %>
   </tbody>
