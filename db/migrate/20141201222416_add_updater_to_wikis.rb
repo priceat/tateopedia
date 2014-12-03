@@ -1,5 +1,5 @@
 class AddUpdaterToWikis < ActiveRecord::Migration
   def change
-    add_column :wikis, :updater, :integer, default: :user_id
+    add_column :wikis, :updater, :string
   end
 end

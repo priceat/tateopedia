@@ -8,6 +8,7 @@
       <th>Created By</th>
       <th>Date Created</th>
       <th>Last Updated</th>
+      <th>Updater</th> 
       <th colspan=""></th>
     </tr>
   </thead>
@@ -15,9 +16,10 @@
     <% @wikis.each do |wiki| %>
       <tr>
         <td><%= link_to wiki.title, wiki %></td>
+        <td><%= time_ago_in_words(wiki.created_at) %> ago</td>
         <td><%= wiki.user.email %></td>
-        <td><%= wiki.created_at %></td>
-        <td><%= wiki.updated_at %></td>
+        <td><%= time_ago_in_words(wiki.updated_at) %> ago</td>
+        <td><%= wiki.updater %></td>
         <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
       </tr>
     <% end %>
@@ -34,6 +36,7 @@
       <th>Created By</th>
       <th>Date Created</th>
       <th>Last Updated</th>
+      <th>Updater</th> 
       <th colspan=""></th>
     </tr>
   </thead>
@@ -42,9 +45,10 @@
     <% @collaborations.each do |wiki| %>
       <tr>
         <td><%= link_to wiki.title, wiki %></td>
+        <td><%= time_ago_in_words(wiki.created_at) %> ago</td>
         <td><%= wiki.user.email %></td>
-        <td><%= wiki.created_at %></td>
-        <td><%= wiki.updated_at %></td>
+        <td><%= time_ago_in_words(wiki.updated_at) %> ago</td>
+        <td><%= wiki.updater %></td>
       </tr>
     <% end %>
   </tbody>

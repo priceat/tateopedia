@@ -3,7 +3,6 @@ class WikisController < ApplicationController
   
   def index
     @wikis = Wiki.public.paginate(page: params[:page], per_page: 10)
-    @wiki_updater = current_user
   end
 
   def private_index
@@ -36,7 +35,8 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = current_user.wikis.new(wiki_params) 
+    @wiki = current_user.wikis.new(wiki_params)
+    @wiki.updater = current_user.email
 
     if @wiki.save
       flash[:notice] = "Wiki, wiki... New Wiki ya'll"
@@ -65,9 +65,10 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
 
     if @wiki.update_attributes(params.require(:wiki).permit(:title, :body, :private, :collaboration, :updater))
-      @wiki.update(updater: 'current_user_id')
+      @wiki.update(updater: current_user.email)
+      remove_collaborators
       flash[:notice] = "Your Wiki is Funkier"
-      redirect_to wikis_path
+      redirect_to @wiki
     else
       flash[:error] = "Not so fast. Nothing new"
       render :edit
@@ -89,6 +90,12 @@ class WikisController < ApplicationController
 
 
 private
+
+def remove_collaborators
+  if params[:wiki][:private] == '0'
+    @wiki.collaborators.destroy_all
+  end
+end
 
  def wiki_params
     params.require(:wiki).permit(:title, :body, :private, :collaboration, :user_id)

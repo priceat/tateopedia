@@ -7,7 +7,9 @@
 <p>
   <strong>Body:</strong>
   <%= markdown(@wiki.body) %>
-  </p>
+</p>
+<p><div class='signature'> Created by: <%= @wiki.user.email %> <%= time_ago_in_words(@wiki.created_at) %> ago.</p></div>
+</br>
 <% if @wiki.joint? %>
 <h4><u> Collaborators </u></h4>
 <table><thead>

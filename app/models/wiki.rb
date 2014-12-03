@@ -14,12 +14,12 @@ class Wiki < ActiveRecord::Base
     end
 
     def joint?
-      self.collaboration == true
+      self.collaboration == true && private == true
     end
 
     def can_be_collaboration?
      user.upgraded? && private == true
     end
-
+   
 
 end

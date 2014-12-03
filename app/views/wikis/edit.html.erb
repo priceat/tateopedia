@@ -2,10 +2,9 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @wiki %> |
 <% if @wiki.can_be_collaboration? && @wiki.user == current_user %>
-<%= link_to 'Add Collaborator', new_wiki_collaborator_path(@wiki) %>
-<% end %> |
+<%= link_to 'Add Collaborator', new_wiki_collaborator_path(@wiki) %> |
+<% end %>
 <% if @wiki.joint? %>
 <h4><u> Collaborators </u></h4>
 <table><thead>

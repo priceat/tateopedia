@@ -40,12 +40,4 @@ class User < ActiveRecord::Base
     end
     wikis
   end
-
-  def my_collaborations
-    wikis = []
-      Wiki.where(user: self).each do |collaboration|
-      wikis << Wiki.find(collaboration.wiki_id)
-      end
-    wikis
-  end
 end

@@ -12,7 +12,8 @@ class CollaboratorsController < ApplicationController
   end
 
   def new
-    @users = User.not(current_user.id)
+    collaborator_ids = @wiki.collaborators.pluck(:user_id)
+    @collaborator_users = User.where.not(id: collaborator_ids).not(current_user.id)
     @collaborator = @wiki.collaborators.new
   end
 
@@ -51,12 +52,13 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     @collaborator.destroy
-      flash[:notice] = 'Collaborator was successfully destroyed.'
+      flash[:notice] = 'Collaborator was successfully removed.'
       redirect_to @wiki
   end
 
   private
- 
+    
+
     def set_collaborator
       @collaborator = Collaborator.find(params[:id])
     end
