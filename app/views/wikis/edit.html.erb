@@ -1,24 +1,27 @@
 <h1>Editing wiki</h1>
 
 <%= render 'form' %>
-
-<% if @wiki.can_be_collaboration? && @wiki.user == current_user %>
-<%= link_to 'Add Collaborator', new_wiki_collaborator_path(@wiki) %> |
-<% end %>
+</br>
 <% if @wiki.joint? %>
-<h4><u> Collaborators </u></h4>
+<h4><u> Current Wiki Collaborators </u></h4>
 <table><thead>
     <tr>
       <th>User</th>
+      <th> Day Added </th>
+      <th colspan="<%= @colspan %>"></th>
     </tr>
   </thead>
    <tbody>
-      <%= render @wiki.collaborators %>
+      <%= render @collaborators %>
       </tbody>
 </table>
 <% end %>
+<% if @wiki.can_be_collaboration? && @wiki.user == current_user %>
+<%= render "collaborators/form" %>
+<% end %>
 </br>
-<%= link_to 'Back', wikis_path %>
+<%= link_to 'Back to Wiki', wiki_path(@wiki) %> |
+<%= link_to 'Back to My Wikis', wikis_my_index_path %>
      
    
  

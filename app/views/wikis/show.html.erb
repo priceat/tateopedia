@@ -9,12 +9,16 @@
   <%= markdown(@wiki.body) %>
 </p>
 <p><div class='signature'> Created by: <%= @wiki.user.email %> <%= time_ago_in_words(@wiki.created_at) %> ago.</p></div>
+<p><div class='signature'> Last Updated by: <%= @wiki.updater %> <%= time_ago_in_words(@wiki.updated_at) %> ago.</p></div>
+
 </br>
 <% if @wiki.joint? %>
-<h4><u> Collaborators </u></h4>
+<h4><u> Current Wiki Collaborators </u></h4>
 <table><thead>
     <tr>
       <th>User</th>
+      <th> Day Added </th>
+      <th colspan="<%= @colspan %>"></th>
     </tr>
   </thead>
    <tbody>
@@ -23,5 +27,7 @@
 </table>
 <% end %>
 </br>
-<%= link_to 'Edit', edit_wiki_path(@wiki) %> |
-<%= link_to 'Back', wikis_path %>
+<% if user_signed_in? %>
+<%= link_to 'Edit Wiki', edit_wiki_path(@wiki) %> |
+<% end %>
+<%= link_to 'Back', :back %>

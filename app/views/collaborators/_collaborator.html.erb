@@ -1,6 +1,9 @@
  <tr>
-  <td>
-    <b><%= collaborator.user.email %></b>
+  <td><b><i><%= collaborator.user.email %></i></b></td>
+  <td><%= time_ago_in_words(collaborator.created_at) %> ago</td> 
+
+   <td><% if @wiki.user == current_user %>
     <%= link_to 'Remove', [collaborator.wiki, collaborator], method: :delete %>
-  </td>
+    <% end %></td>
+  
 </tr>

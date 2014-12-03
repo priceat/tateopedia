@@ -12,8 +12,6 @@ class CollaboratorsController < ApplicationController
   end
 
   def new
-    collaborator_ids = @wiki.collaborators.pluck(:user_id)
-    @collaborator_users = User.where.not(id: collaborator_ids).not(current_user.id)
     @collaborator = @wiki.collaborators.new
   end
 

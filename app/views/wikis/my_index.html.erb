@@ -14,8 +14,8 @@
  <% @wikis.each do |wiki| %>
       <tr>
         <td><%= link_to wiki.title, wiki %></td>
-        <td><%= wiki.created_at %></td>
-        <td><%= wiki.updated_at %></td>
+        <td><%= time_ago_in_words(wiki.created_at) %> ago</td>
+        <td><%= time_ago_in_words(wiki.updated_at) %> ago</td>
          <% if @user.upgraded? %>
         <td><%= link_to 'View Collaborators', wiki_collaborators_path(wiki) %></td>
         <% if wiki.user == current_user %>
@@ -28,4 +28,4 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'New Wiki', new_wiki_path %>
+<%= link_to 'New Wiki', new_wiki_path, class: 'btn btn-warning' %>

@@ -1,11 +1,11 @@
 <% if user_signed_in? %>
   <li><%= link_to 'Public Wikis', wikis_path %></li>
   <li><%= link_to 'Private Wikis', wikis_private_index_path %></li>
-   <li><%= link_to 'My Wikis', wikis_my_index_path %></li>
+  <li><%= link_to 'My Wikis', wikis_my_index_path %></li>
   <% if current_user.collaboration_access? %>
   <li><%= link_to 'Collaborations', wikis_collaborations_index_path %> </li>
   <% end %>
-  <li><%= link_to 'Edit account', edit_user_registration_path %></li>
+  <li><%= link_to "#{current_user.name}'s Account", edit_user_registration_path %></li>
   <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
 <% else %>
   <li><%= link_to 'Home', root_path, class: 'navbar-brand' %></li>

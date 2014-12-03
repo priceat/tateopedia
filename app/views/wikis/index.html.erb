@@ -7,7 +7,7 @@
       <th>Date Created</th>
       <th>Wiki Creator</th>
       <th>Last Updated</th>
-      <th>Updater</th> 
+      <th>Updated By</th> 
     </tr>
   </thead>
 
@@ -25,6 +25,5 @@
 </table>
 
 <%= will_paginate @wikis %>
-<% if user_signed_in? %>
-<%= link_to 'New Wiki', new_wiki_path %>
-<% end %>
+</br>
+<%= link_to 'New Wiki', new_wiki_path, class: 'btn btn-warning' %>

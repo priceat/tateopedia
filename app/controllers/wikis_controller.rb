@@ -31,7 +31,13 @@ class WikisController < ApplicationController
   end
 
   def new
-    @wiki = current_user.wikis.new
+    @wiki = Wiki.new
+     if user_signed_in?
+      render :new
+    else 
+      flash[:error] = "You need to be signed up to do that!"
+      redirect_to new_user_registration_path
+    end
   end
 
   def create
@@ -40,7 +46,7 @@ class WikisController < ApplicationController
 
     if @wiki.save
       flash[:notice] = "Wiki, wiki... New Wiki ya'll"
-      redirect_to wikis_path
+      redirect_to wikis_my_index_path
     else
       flash[:error] = "Ain't No Wiki. Try Again!"
       render :new
@@ -50,15 +56,11 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    @users = User.all
     @wiki_updater = current_user
-
-    if user_signed_in?
-      render :edit
-    else 
-      flash[:error] = "You need to be signed up to do that!"
-      redirect_to new_user_registration_path
-    end
+    @collaborators = @wiki.collaborators
+    @new_collaborator = Collaborator.new
+    collaborator_ids = @wiki.collaborators.pluck(:user_id)
+    @collaborator_users = User.where.not(id: collaborator_ids).not(current_user.id)
   end
 
   def update
