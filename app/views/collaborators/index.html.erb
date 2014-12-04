@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>User</th>
+      <th>Date Added</th>
     </tr>
   </thead>
 
@@ -11,6 +12,7 @@
     <% @collaborators.each do |collaborator| %>
       <tr>
         <td><%= collaborator.user.email %></td>
+        <td><%= time_ago_in_words(collaborator.created_at) %> ago</td> 
       </tr>
     <% end %>
   </tbody>

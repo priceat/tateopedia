@@ -8,6 +8,7 @@ class Wiki < ActiveRecord::Base
 
   scope :public, -> { where(:private => false) }
   scope :private, -> { where(:private => true) }
+  default_scope { order('created_at DESC') }
 
     def set_default_access
       self.private ||= false

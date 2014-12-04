@@ -1,4 +1,13 @@
 <h2> Working Wiki </h2>
+ <div class='wiki_mark'><b>
+  <% if !@wiki.private %>
+  Public Wiki
+  <% else %>
+  Private Wiki
+  <% end %>
+</b></div>
+  
+</br>
 <p>
   <strong>Name:</strong>
   <%= markdown(@wiki.title) %>
@@ -10,8 +19,6 @@
 </p>
 <p><div class='signature'> Created by: <%= @wiki.user.email %> <%= time_ago_in_words(@wiki.created_at) %> ago.</p></div>
 <p><div class='signature'> Last Updated by: <%= @wiki.updater %> <%= time_ago_in_words(@wiki.updated_at) %> ago.</p></div>
-
-</br>
 <% if @wiki.joint? %>
 <h4><u> Current Wiki Collaborators </u></h4>
 <table><thead>
@@ -26,8 +33,8 @@
       </tbody>
 </table>
 <% end %>
-</br>
 <% if user_signed_in? %>
+</br>
 <%= link_to 'Edit Wiki', edit_wiki_path(@wiki) %> |
 <% end %>
-<%= link_to 'Back', :back %>
+<%= link_to 'Back', :back %> 

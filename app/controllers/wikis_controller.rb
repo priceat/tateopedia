@@ -44,12 +44,15 @@ class WikisController < ApplicationController
     @wiki = current_user.wikis.new(wiki_params)
     @wiki.updater = current_user.email
 
+    respond_to do |format|
     if @wiki.save
-      flash[:notice] = "Wiki, wiki... New Wiki ya'll"
-      redirect_to wikis_my_index_path
+      format.html { redirect_to @wiki, notice: "Wiki, wiki... New Wiki ya'll" }
+      format.json { render :show, status: :created, location: @wiki }
     else
-      flash[:error] = "Ain't No Wiki. Try Again!"
-      render :new
+      format.html { render :new }
+      format.json { render json: @wiki.errors, status: :unprocessable_entity }
+    
+    end
     end
   end
 
@@ -66,27 +69,32 @@ class WikisController < ApplicationController
   def update
     @wiki = Wiki.find(params[:id])
 
+    respond_to do |format|
+
     if @wiki.update_attributes(params.require(:wiki).permit(:title, :body, :private, :collaboration, :updater))
       @wiki.update(updater: current_user.email)
       remove_collaborators
-      flash[:notice] = "Your Wiki is Funkier"
-      redirect_to @wiki
+      format.html { redirect_to @wiki, notice: "Your Wiki is Funkier!" }
+      format.json { render :show, status: :ok, location: @wiki }
+      #flash[:notice] = "Your Wiki is Funkier"
+      #redirect_to @wiki
     else
-      flash[:error] = "Not so fast. Nothing new"
-      render :edit
+      format.html { render :edit }
+      format.json { render json: @wiki.errors, status: :unprocessable_entity }
+      #flash[:error] = "Not so fast. Nothing new"
+      #render :edit
+    end
     end
   end
 
   def destroy
      @wiki = Wiki.find(params[:id])
-     title = @wiki.title
  
-     if @wiki.destroy
-       flash[:notice] = "\"#{title}\" was deleted successfully."
-       redirect_to wikis_path
-     else
-       flash[:error] = "There was an error deleting the wiki."
-       render :show
+     @wiki.destroy
+      respond_to do |format|
+      format.html { redirect_to wikis_url, notice: 'Wiki was successfully destroyed.' }
+      format.json { head :no_content }
+
      end
   end
 

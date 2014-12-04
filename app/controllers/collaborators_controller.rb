@@ -12,7 +12,10 @@ class CollaboratorsController < ApplicationController
   end
 
   def new
-    @collaborator = @wiki.collaborators.new
+    #@new_collaborator = @wiki.collaborators.new
+    @new_collaborator = Collaborator.new
+    collaborator_ids = @wiki.collaborators.pluck(:user_id)
+    @collaborator_users = User.where.not(id: collaborator_ids).not(current_user.id)
   end
 
 
@@ -23,16 +26,20 @@ class CollaboratorsController < ApplicationController
   def create
     @collaborator = @wiki.collaborators.build(collaborator_params)
 
+    respond_to do |format|
         if @collaborator.save
           @user = @collaborator.user(params[:user_id])
           @wiki = @collaborator.wiki(params[:wiki_id])
           @user.update(member: true)
           @wiki.update(collaboration: true)
-        flash[:notice] = 'Collaborator was successfully created.'
-        redirect_to @wiki
+        format.html { redirect_to wiki_path(@wiki), notice: 'Collaborator was successfully added.' }
+        format.json { render :edit, status: :created, location: @collaborator }
+      
       else
-        flash[:error] = "No can do. Try Again!"
-        render :new
+        format.html { render :new }
+        format.json { render json: @collaborator.errors, status: :unprocessable_entity }
+        
+      end
       end
   end
 
@@ -50,8 +57,11 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     @collaborator.destroy
-      flash[:notice] = 'Collaborator was successfully removed.'
-      redirect_to edit_wiki_path(@wiki)
+    respond_to do |format|
+      format.html { redirect_to edit_wiki_path(@wiki), notice: 'Collaborator was successfully removed.' }
+      format.json { head :no_content }
+     
+    end
   end
 
   private

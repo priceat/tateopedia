@@ -16,5 +16,6 @@
 </br>
   <div class="actions">
     <%= f.submit "Update Wiki", class: 'btn btn-success' %>
-  </div>
+  <%= f.submit "Delete Wiki", class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this wiki?' } %> </div>
+
 <% end %>

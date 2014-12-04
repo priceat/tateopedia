@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Date Created</th>
       <th>Last Updated</th>
+      <th>Wiki Type</th>
       <th colspan="<%= @colspan %>"></th>
     </tr>
   </thead>
@@ -16,14 +17,18 @@
         <td><%= link_to wiki.title, wiki %></td>
         <td><%= time_ago_in_words(wiki.created_at) %> ago</td>
         <td><%= time_ago_in_words(wiki.updated_at) %> ago</td>
-         <% if @user.upgraded? %>
+        <% if wiki.private? %>
+        <td><div class='signature'>Private</div></td>
+        <% else %>
+        <td><div class='signature'>Public</div></td>
+        <% end %>
+         <% if wiki.can_be_collaboration? %>
         <td><%= link_to 'View Collaborators', wiki_collaborators_path(wiki) %></td>
-        <% if wiki.user == current_user %>
-        <td><%= link_to 'Add Collaborator', new_wiki_collaborator_path(wiki) %></td>
+        <td><%= link_to 'Add Collaborator', edit_wiki_path(wiki) %></td>
+        <% end %>
         <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
         <td><%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-         <% end %>
-          <% end %>
+          
       </tr>
     <% end %>
   </tbody>
