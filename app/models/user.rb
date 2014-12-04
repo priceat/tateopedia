@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
      
-  #after_initialize :set_default_role, :if => :new_record?
+  after_initialize :set_default_role, :if => :new_record?
 
   validates :role, inclusion: { in: ['standard', 'premium', 'admin'].freeze }
 
@@ -16,9 +16,9 @@ class User < ActiveRecord::Base
   scope :viewable, -> { where(:member => true) }
 
 
-  #def set_default_role
-   # self.role ||= :standard
-  #end
+  def set_default_role
+   self.role ||= :standard
+  end
 
   def destroy_private_wikis
     wikis.where(private: true).destroy_all
