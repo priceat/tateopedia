@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
 
   def set_default_role
-    self.role ||= 'standard'
+    self.role ||= :standard
   end
 
   def destroy_private_wikis
