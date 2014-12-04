@@ -82,6 +82,6 @@ Tateopedia::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
-   config.assets.initialize_on_precompile = false 
+  config.assets.initialize_on_precompile = false
 
 end
