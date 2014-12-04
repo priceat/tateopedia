@@ -7,6 +7,7 @@
       <th>Date Created</th>
       <th>Last Updated</th>
       <th colspan="<%= @colspan %>"></th>
+      <th colspan="<%= @colspan %>"></th>
     </tr>
   </thead>
 
@@ -18,8 +19,9 @@
         <td><%= time_ago_in_words(wiki.updated_at) %> ago</td>
         <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
         <td><%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+         
       </tr>
-    <% end %>
+   <% end %>
   </tbody>
 </table>
 

@@ -5,11 +5,12 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Created By</th>
       <th>Date Created</th>
       <th>Last Updated</th>
       <th>Updated By</th> 
-      <th colspan=""></th>
+      <th colspan="<%= @colspan %>"></th>
+      <th colspan="<%= @colspan %>"></th>
+      <th colspan="<%= @colspan %>"></th>
     </tr>
   </thead>
 <tbody>
@@ -17,10 +18,11 @@
       <tr>
         <td><%= link_to wiki.title, wiki %></td>
         <td><%= time_ago_in_words(wiki.created_at) %> ago</td>
-        <td><%= wiki.user.email %></td>
         <td><%= time_ago_in_words(wiki.updated_at) %> ago</td>
-        <td><%= wiki.updater %></td>
+        <td><%= wiki.updater %></td> 
+        <td><%= link_to 'View Collaborators', wiki_collaborators_path(wiki) %></td>
         <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
+        <td><%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -49,6 +51,7 @@
         <td><%= time_ago_in_words(wiki.created_at) %> ago</td>
         <td><%= time_ago_in_words(wiki.updated_at) %> ago</td>
         <td><%= wiki.updater %></td>
+        <td><%= link_to 'Edit', edit_wiki_path(wiki) %></td>
       </tr>
     <% end %>
   </tbody>

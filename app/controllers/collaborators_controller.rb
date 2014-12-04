@@ -51,7 +51,7 @@ class CollaboratorsController < ApplicationController
   def destroy
     @collaborator.destroy
       flash[:notice] = 'Collaborator was successfully removed.'
-      redirect_to @wiki
+      redirect_to edit_wiki_path(@wiki)
   end
 
   private
