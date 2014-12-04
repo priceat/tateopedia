@@ -30,6 +30,8 @@ gem 'will_paginate', '~> 3.0.5'
 
 gem 'redcarpet'
 
+gem 'epic-editor-rails'
+
 
  group :development do
    gem 'sqlite3'

@@ -25,7 +25,11 @@
 <% end %>
 </br>
 <%= link_to 'Back to Wiki', wiki_path(@wiki) %> |
+<% if @wiki.user == current_user %>
 <%= link_to 'Back to My Wikis', wikis_my_index_path %>
+<% else %>
+<%= link_to 'Back to Wikis', wikis_path %>
+<% end %>
      
    
  

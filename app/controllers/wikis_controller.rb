@@ -59,7 +59,7 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    @wiki_updater = current_user
+    @wiki_updater = current_user.email
     @collaborators = @wiki.collaborators
     @new_collaborator = Collaborator.new
     collaborator_ids = @wiki.collaborators.pluck(:user_id)
@@ -76,8 +76,7 @@ class WikisController < ApplicationController
       remove_collaborators
       format.html { redirect_to @wiki, notice: "Your Wiki is Funkier!" }
       format.json { render :show, status: :ok, location: @wiki }
-      #flash[:notice] = "Your Wiki is Funkier"
-      #redirect_to @wiki
+      
     else
       format.html { render :edit }
       format.json { render json: @wiki.errors, status: :unprocessable_entity }
