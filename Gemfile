@@ -24,11 +24,7 @@ gem 'devise'
 
 gem 'figaro', '1.0'
 
-gem 'pundit'
-
 gem 'stripe'
-
-gem 'epic-editor-rails'
 
 gem 'will_paginate', '~> 3.0.5'
 

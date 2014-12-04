@@ -5,4 +5,4 @@
  Made with my mentor at [Bloc](http://bloc.io). And a little help from Voltron.
  
 
-Ruby -v 2.0.0p247 Rails -v 4.0.4
+Ruby -v 2.1.4 Rails -v 4.0.4
