@@ -1,17 +1,16 @@
 Tateopedia::Application.routes.draw do
-  get "users/index"
-  get "users/new"
-  get "charges/new"
+
   get "wikis/private_index"
   get "wikis/my_index"
   get "wikis/collaborations_index"
 
   devise_for :users 
-    resources :wikis, only: [:new, :update, :edit, :create, :show, :index, :private_index, :my_index, :destroy, :collaborations_index] do
-      resources :collaborators
-    end
 
-    resources :users, only: [:update, :show, :index]
+  resources :wikis do
+    resources :collaborators
+  end
+
+  resources :users, only: [:update, :show, :index]
 
   resources :charges, only: [:new, :create, :destroy]
 

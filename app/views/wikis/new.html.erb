@@ -8,25 +8,26 @@
        <li>Express love.</li>
        <li>No one likes long wind. Make it short.</li>
      </ul>
-   </div>
-   <div class="col-md-8">
-     <%= form_for @wiki do |f| %>
-       <div class="form-group">
-         <%= f.label :title %>
-         <%= f.text_field :title, class: 'form-control', placeholder: "Enter Wiki title" %>
-       </div>
-       <div class="form-group">
-         <%= f.label :body %>
-         <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter Wiki body" %>
-       </div>
-       <div class="form-group">
-         <%= f.submit "Save", class: 'btn btn-success' %>
-       </div>
-            <% if current_user.upgraded? %>
-                <%= f.label :private, class: 'checkbox' do %>
-                <%= f.check_box :private, {}, "true", "false" %> Private wiki
-                <% end %>
-            <% end %>
+  </div>
+
+  <div class="col-md-8">
+    <%= form_for @wiki do |f| %>
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: 'form-control', placeholder: "Enter Wiki title" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :body %>
+        <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter Wiki body" %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Save", class: 'btn btn-success' %>
+      </div>
+      <% if current_user.upgraded? %>
+        <%= f.label :private, class: 'checkbox' do %>
+          <%= f.check_box :private %> Private wiki
+        <% end %>
       <% end %>
-   </div>
- </div>
+    <% end %>
+  </div>
+</div>

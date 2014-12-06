@@ -22,7 +22,7 @@ class WikisController < ApplicationController
   end
 
   def collaborations_index
-    @collaborations = current_user.collaborations
+    @collaborations = current_user.wiki_collaborations
     @wikis = current_user.wikis.where(collaboration: true)
   end
 
@@ -45,14 +45,13 @@ class WikisController < ApplicationController
     @wiki.updater = current_user.email
 
     respond_to do |format|
-    if @wiki.save
-      format.html { redirect_to @wiki, notice: "Wiki, wiki... New Wiki ya'll" }
-      format.json { render :show, status: :created, location: @wiki }
-    else
-      format.html { render :new }
-      format.json { render json: @wiki.errors, status: :unprocessable_entity }
-    
-    end
+      if @wiki.save
+        format.html { redirect_to @wiki, notice: "Wiki, wiki... New Wiki ya'll" }
+        format.json { render :show, status: :created, location: @wiki }
+      else
+        format.html { render :new }
+        format.json { render json: @wiki.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -62,56 +61,51 @@ class WikisController < ApplicationController
     @wiki_updater = current_user.email
     @collaborators = @wiki.collaborators
     @new_collaborator = Collaborator.new
-    collaborator_ids = @wiki.collaborators.pluck(:user_id)
-    @collaborator_users = User.where.not(id: collaborator_ids).not(current_user.id)
+    collaborator_ids = @wiki.collaborators.pluck(:user_id) << current_user.id
+    @collaborator_users = User.where.not(id: collaborator_ids)
   end
 
   def update
     @wiki = Wiki.find(params[:id])
 
     respond_to do |format|
-
-    if @wiki.update_attributes(params.require(:wiki).permit(:title, :body, :private, :collaboration, :updater))
-      @wiki.update(updater: current_user.email)
-      remove_collaborators
-      format.html { redirect_to @wiki, notice: "Your Wiki is Funkier!" }
-      format.json { render :show, status: :ok, location: @wiki }
-      
-    else
-      format.html { render :edit }
-      format.json { render json: @wiki.errors, status: :unprocessable_entity }
-      #flash[:error] = "Not so fast. Nothing new"
-      #render :edit
-    end
+      if @wiki.update_attributes(params.require(:wiki).permit(:title, :body, :private, :collaboration, :updater))
+        @wiki.update(updater: current_user.email)
+        remove_collaborators
+        format.html { redirect_to @wiki, notice: "Your Wiki is Funkier!" }
+        format.json { render :show, status: :ok, location: @wiki }
+      else
+        format.html { render :edit }
+        format.json { render json: @wiki.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
-     @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.find(params[:id])
  
-     @wiki.destroy
-      respond_to do |format|
+    @wiki.destroy
+    respond_to do |format|
       format.html { redirect_to wikis_url, notice: 'Wiki was successfully destroyed.' }
       format.json { head :no_content }
-
-     end
+    end
   end
 
 
-private
+  private
 
-def remove_collaborators
-  if params[:wiki][:private] == '0'
-    @wiki.collaborators.destroy_all
+  def remove_collaborators
+    if params[:wiki][:private] == '0'
+      @wiki.collaborators.destroy_all
+    end
   end
-end
 
- def wiki_params
-    params.require(:wiki).permit(:title, :body, :private, :collaboration, :user_id)
- end
+  def wiki_params
+    params.require(:wiki).permit(:title, :body, :private, :collaboration, :user_id, :updater)
+  end
 
- def set_user
-  @user = current_user
- end
+  def set_user
+    @user = current_user
+  end
 
 end
