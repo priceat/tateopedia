@@ -1,11 +1,13 @@
 <h2> Working Wiki </h2>
- <div class='wiki_mark'><b>
+<div class='wiki_mark'>
+  <strong>
   <% if !@wiki.private %>
-  Public Wiki
+    Public Wiki
   <% else %>
-  Private Wiki
+    Private Wiki
   <% end %>
-</b></div>
+  </strong>
+</div>
   
 </br>
 <p>
@@ -19,9 +21,9 @@
 </p>
 <p><div class='signature'> Created by: <%= @wiki.user.email %> <%= time_ago_in_words(@wiki.created_at) %> ago.</p></div>
 <p><div class='signature'> Last Updated by: <%= @wiki.updater %> <%= time_ago_in_words(@wiki.updated_at) %> ago.</p></div>
-<% if @wiki.joint? %>
-<h4><u> Current Wiki Collaborators </u></h4>
-<table><thead>
+<% if @wiki.has_collaborators? %>
+  <h4><u> Current Wiki Collaborators </u></h4>
+  <table><thead>
     <tr>
       <th>User</th>
       <th> Day Added </th>
@@ -30,11 +32,11 @@
   </thead>
    <tbody>
       <%= render @wiki.collaborators %>
-      </tbody>
-</table>
+   </tbody>
+  </table>
 <% end %>
 <% if user_signed_in? %>
-</br>
-<%= link_to 'Edit Wiki', edit_wiki_path(@wiki) %> |
+  </br>
+  <%= link_to 'Edit Wiki', edit_wiki_path(@wiki) %> |
 <% end %>
 <%= link_to 'Back', :back %> 

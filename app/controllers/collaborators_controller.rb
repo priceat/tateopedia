@@ -12,7 +12,6 @@ class CollaboratorsController < ApplicationController
   end
 
   def new
-    #@new_collaborator = @wiki.collaborators.new
     @new_collaborator = Collaborator.new
     collaborator_ids = @wiki.collaborators.pluck(:user_id)
     @collaborator_users = User.where.not(id: collaborator_ids).not(current_user.id)
@@ -27,20 +26,17 @@ class CollaboratorsController < ApplicationController
     @collaborator = @wiki.collaborators.build(collaborator_params)
 
     respond_to do |format|
-        if @collaborator.save
-          @user = @collaborator.user(params[:user_id])
-          @wiki = @collaborator.wiki(params[:wiki_id])
-          @user.update(member: true)
-          @wiki.update(collaboration: true)
+       if @collaborator.save
+         @user = @collaborator.user
+         @user.update(member: true)
+         @wiki.update(collaboration: true)
         format.html { redirect_to wiki_path(@wiki), notice: 'Collaborator was successfully added.' }
         format.json { render :edit, status: :created, location: @collaborator }
-      
-      else
+       else
         format.html { render :new }
         format.json { render json: @collaborator.errors, status: :unprocessable_entity }
-        
-      end
-      end
+       end
+    end
   end
 
 
@@ -66,16 +62,15 @@ class CollaboratorsController < ApplicationController
 
   private
     
+  def set_collaborator
+    @collaborator = Collaborator.find(params[:id])
+  end
 
-    def set_collaborator
-      @collaborator = Collaborator.find(params[:id])
-    end
+  def set_wiki
+    @wiki = Wiki.find(params[:wiki_id])
+  end
 
-    def set_wiki
-      @wiki = Wiki.find(params[:wiki_id])
-    end
-
-    def collaborator_params
-      params.require(:collaborator).permit(:user_id, :wiki_id)
-    end
+  def collaborator_params
+    params.require(:collaborator).permit(:user_id, :wiki_id)
+  end
 end

@@ -3,12 +3,13 @@
 <%= render 'form' %>
 </br>
 <% if @wiki.can_be_collaboration? && @wiki.user == current_user %>
-<%= render "collaborators/form" %>
+  <%= render "collaborators/form" %>
 <% end %>
 </br>
-<% if @wiki.joint? %>
-<h4><u> Current Wiki Collaborators </u></h4>
-<table><thead>
+
+<% if @wiki.has_collaborators? %>
+  <h4><u> Current Wiki Collaborators </u></h4>
+  <table><thead>
     <tr>
       <th>User</th>
       <th> Day Added </th>
@@ -17,18 +18,21 @@
   </thead>
    <tbody>
       <%= render @collaborators %>
-      </tbody>
-</table>
+   </tbody>
+  </table>
 <% end %>
+
 <% if !@wiki.private %>
 <h4><u> If you want to make this Wiki a collaboration, it needs to be privatized! </u></h4>
 <% end %>
+
 </br>
+
 <%= link_to 'Back to Wiki', wiki_path(@wiki) %> |
 <% if @wiki.user == current_user %>
-<%= link_to 'Back to My Wikis', wikis_my_index_path %>
+  <%= link_to 'Back to My Wikis', wikis_my_index_path %>
 <% else %>
-<%= link_to 'Back to Wikis', wikis_path %>
+  <%= link_to 'Back to Wikis', wikis_path %>
 <% end %>
      
    
