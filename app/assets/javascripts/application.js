@@ -17,6 +17,9 @@
 //= require_tree .
 //= require epiceditor
 
+
+// is this being used?
+
 var editor;
 $(function() {
   var opts = {

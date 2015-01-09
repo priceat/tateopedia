@@ -9,6 +9,8 @@ class Wiki < ActiveRecord::Base
   default_scope { order('created_at DESC') }
 
 
+  # indentation
+  
     def has_collaborators?
       self.collaboration == true
     end

@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
      
   validates :role, inclusion: { in: ['standard', 'premium', 'admin'].freeze }
 
+
+  # :not method already exists in Active Record(rails 4, not 3)
   scope :not, ->(id) { where('id != ?', id) }
   scope :viewable, -> { where(:member => true) }
 

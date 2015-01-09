@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# delete blank lines
+
 ruby '2.1.4'
 
 gem 'rails', '4.0.0'
