@@ -10,33 +10,10 @@ class ChargesController < ApplicationController
   end
 
   def create
-    @amount = params[:amount]
-    
-    customer = Stripe::Customer.create(
-      email: current_user.email,
-      card: params[:stripeToken]
-      )
-
-    begin
-      charge = Stripe::Charge.create(
-        customer: customer.id,
-        amount: @amount,
-        description: "CashMoney Membership - #{current_user.email}",
-        currency: 'usd'
-        )
-
-      if current_user.update(role: 'premium', stripe_customer_id: customer.id)
-        flash[:notice] = "You're paid up, #{current_user.email}! Thanks for the lettuce doggy!"
-        redirect_to edit_user_registration_path
-      else
-        flash[:error] = "There was an error upgrading your account. Please contact support!"
-        redirect_to edit_user_registration_path
-      end
-
-
-    rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to new_charge_path
+    if CreateCharge.call(current_user, params)
+      redirect_to edit_user_registration_path, alert: 'Upgrade successful'
+    else
+      stripe_card_error
     end
   end
 
@@ -54,6 +31,16 @@ class ChargesController < ApplicationController
       redirect_to edit_user_registration_path
     end
   end
+
+  private
+
+  def stripe_card_error
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to new_charge_path
+    end
+  end
+  
 
 
 end
